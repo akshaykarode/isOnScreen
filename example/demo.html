@@ -24,7 +24,9 @@
 </body>
 <script type="text/javascript">
 	$(window).scroll(function(){
-		var b = $('#part2').isOnScreen()
+		var b = $('#part2').isOnScreen({
+			visibleTill: 50
+		})
 		console.log(b)
 		
 	})
