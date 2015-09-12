@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Demo</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="../isOnScreen.js"></script>
+<style type="text/css">
+	.part{ height: 500px; border: 1px solid black;}
+	#part1{ background-color: orange;}
+	#part2{ background-color: white;}
+	#part3{ background-color: green;}
+	#part4{ background-color: blue;}
+	#part5{ background-color: red;}
+</style>
+</head>
+<body>
+<div id="container">
+	<div class="part" id="part1"></div>
+	<div class="part" id="part2"></div>
+	<div class="part" id="part3"></div>
+	<div class="part" id="part4"></div>
+	<div class="part" id="part5"></div>
+</div>
+</body>
+<script type="text/javascript">
+	$(window).scroll(function(){
+		var b = $('#part2').isOnScreen()
+		console.log(b)
+		
+	})
+</script>
+</html>
