@@ -5,13 +5,19 @@
 	}
 	var defaults = {
 		visibleTill: 0,
-		autoScroll : false
+		onDoneCallback : function(){return true}
 	}
 	$.fn.isOnScreen = function(options) {
 		var $elem = $(this)
-		overrideDefaults(options)
-		var scene = getScene($elem)
-		return processResult(scene,$elem)
+		$elem.options = options
+		$elem._meta = _meta
+		
+		overrideDefaults($elem)
+		$w.scroll(debounce(function() {
+			var scene = getScene($elem),
+					done  = processResult(scene,$elem)
+			$elem.options.onDoneCallback(done,scene)
+		}, 500))
 	}
 	function getScene(element) {
 		return {
@@ -21,22 +27,41 @@
 			elemBottom:   element.offset().top + element.height()
 		}
 	}
-	function overrideDefaults(options){
-		_meta.isOptionProvided  = (options) ? true:false;
-		if(options)
-			for (key in options){
-				defaults[key] = options[key]
-			}
+	function overrideDefaults(element){
+		element._meta.isOptionProvided  = (element.options) ? true:false;
+		// if(element.options)
+		// 	for (key in element.options){
+		// 		defaults[key] = element.options[key]
+		// 	}
 	}
 	function processResult(scene,element){
 		if(!_meta.isOptionProvided){ // if no options then return default 
 			return ((scene.elemBottom <= scene.docViewBottom) && (scene.elemTop >= scene.docViewTop)); 
 		}
-		if(defaults.visibleTill!=0){ // if visibleTill then return truth
+		if(element.options.visibleTill!=0){ // if visibleTill then return truth
 			var canvasY = scene.elemTop - scene.docViewTop,
 					paintY = scene.docViewBottom - scene.elemTop,
 					percent = (paintY*100)/(canvasY+paintY);
-			return (defaults.visibleTill<=percent)
+			if(percent>=element.options.visibleTill && (scene.elemBottom > scene.docViewTop)){
+				return true; // return if element is visible
+			}else{  // return false if element gone away - (scene.elemBottom <= scene.docViewTop) || (scene.elemTop >= scene.docViewBottom)
+				return false
+			}
+
 		}
 	}
+	function debounce(func, wait, immediate) {
+		var timeout;
+		return function() {
+			var context = this, args = arguments;
+			var later = function() {
+				timeout = null;
+				if (!immediate) func.apply(context, args);
+			};
+			var callNow = immediate && !timeout;
+			clearTimeout(timeout);
+			timeout = setTimeout(later, wait);
+			if (callNow) func.apply(context, args);
+		};
+	};
 })(jQuery);

@@ -6,69 +6,75 @@
 <script type="text/javascript" src="../isOnScreen.js"></script>
 <style type="text/css">
 	.part{ height: 500px; border: 1px solid black;}
-	.parts{ height: 25%; border: 1px solid black;}
+	.map{ height: 20%; border: 1px solid black;}
 	label{ font-size: 22px;}
-	#part1{ background-color: orange;}
-	#part2{ background-color: white;}
-	#part3{ background-color: green;}
-	#part4{ background-color: blue;}
-	#part5{ background-color: red;}
+	#globalmap{ height: 200px; width: 250px; border: 1px solid black; position: fixed; right: 10%;}
+	#map1,#part1{ background-color: orange;}
+	#map2,#part2{ background-color: white;}
+	#map3,#part3{ background-color: green;}
+	#map4,#part4{ background-color: blue;}
+	#map5,#part5{ background-color: red;}
 </style>
 </head>
 <body>
 <div id="container">
-	<div class="part" id="part1">
-		Value : <label>false</label>
+	<div id="globalmap">
+		<div class="map" id="map1">Value : <label>false</label></div>
+		<div class="map" id="map2">Value : <label>false</label></div>
+		<div class="map" id="map3">Value : <label>false</label></div>
+		<div class="map" id="map4">Value : <label>false</label></div>
+		<div class="map" id="map5">Value : <label>false</label></div>
 	</div>
-	<div class="part" id="part2">
-		<div class="parts">Value : <label>false</label></div>
-		<div class="parts"></div>
-		<div class="parts"></div>
-		<div class="parts"></div>
-	</div>
-	<div class="part" id="part3">
-		Value : <label>false</label>
-	</div>
-	<div class="part" id="part4">
-		Value : <label>false</label>
-	</div>
-	<div class="part" id="part5">
-		Value : <label>false</label>
-	</div>
+
+	<div class="part" id="part1">Value : <label>false</label></div>
+	<div class="part" id="part2">Value : <label>false</label></div>
+	<div class="part" id="part3">Value : <label>false</label></div>
+	<div class="part" id="part4">Value : <label>false</label></div>
+	<div class="part" id="part5">Value : <label>false</label></div>
 </div>
 </body>
 <script type="text/javascript">
-	
-	$(window).scroll(function(){
-		doit()
-	})
 
 	$(function(){
-		doit()
+
+		$('#part1').isOnScreen({
+			visibleTill: 10,
+			onDoneCallback: function(done,scene){
+				$('#part1').find('label').text(done)
+				$('#map1').find('label').text(done)
+			}
+		})
+		$('#part2').isOnScreen({
+			visibleTill: 30,
+			onDoneCallback: function(done,scene){
+				console.log('done2',done)
+				$('#part2').find('label').text(done)
+				$('#map2').find('label').text(done)
+			}
+		})
+		$('#part3').isOnScreen({
+			visibleTill: 50,
+			onDoneCallback: function(done,scene){
+				$('#part3').find('label').text(done)
+				$('#map3').find('label').text(done)
+			}
+		})
+		$('#part4').isOnScreen({
+			visibleTill: 70,
+			onDoneCallback: function(done,scene){
+				$('#part4').find('label').text(done)
+				$('#map4').find('label').text(done)
+			}
+		})
+		$('#part5').isOnScreen({
+			visibleTill: 90,
+			onDoneCallback: function(done,scene){
+				$('#part5').find('label').text(done)
+				$('#map5').find('label').text(done)
+			}
+		})
+
 	})
 
-	function doit(){
-		var p1 = $('#part1').isOnScreen({
-			visibleTill: 25
-		})
-		var p2 = $('#part2').isOnScreen({
-			visibleTill: 50
-		})
-		var p3 = $('#part3').isOnScreen({
-			visibleTill: 25
-		})
-		var p4 = $('#part4').isOnScreen({
-			visibleTill: 25
-		})
-		var p5 = $('#part5').isOnScreen({
-			visibleTill: 25
-		})
-		
-		$('#part1').find('label').text(p1)
-		$('#part2').find('label').text(p2)
-		$('#part3').find('label').text(p3)
-		$('#part4').find('label').text(p4)
-		$('#part5').find('label').text(p5)
-	}
 </script>
 </html>
