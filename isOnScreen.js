@@ -10,8 +10,8 @@
 	$.fn.isOnScreen = function(options) {
 		var $elem = $(this)
 		overrideDefaults(options)
-		var s = getScene($elem)
-		return processResult(s)
+		var scene = getScene($elem)
+		return processResult(scene,$elem)
 	}
 	function getScene(element) {
 		return {
@@ -28,17 +28,15 @@
 				defaults[key] = options[key]
 			}
 	}
-	function processResult(scene){
+	function processResult(scene,element){
 		if(!_meta.isOptionProvided){ // if no options then return default 
 			return ((scene.elemBottom <= scene.docViewBottom) && (scene.elemTop >= scene.docViewTop)); 
 		}
-		if(defaults.visibleTill!=0){
+		if(defaults.visibleTill!=0){ // if visibleTill then return truth
 			var canvasY = scene.elemTop - scene.docViewTop,
 					paintY = scene.docViewBottom - scene.elemTop,
 					percent = (paintY*100)/(canvasY+paintY);
-			console.log(percent)
 			return (defaults.visibleTill<=percent)
 		}
 	}
 })(jQuery);
-
