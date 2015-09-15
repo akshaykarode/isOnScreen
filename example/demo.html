@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Demo</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="./../isOnScreen.js"></script>
+<style type="text/css">
+	.part{ height: 500px; border: 1px solid black;}
+	.map{ height: 20%; border: 1px solid black;}
+	label{ font-size: 22px;}
+	#globalmap{ height: 200px; width: 250px; border: 1px solid black; position: fixed; right: 10%;}
+	#map1,#part1{ background-color: orange;}
+	#map2,#part2{ background-color: white;}
+	#map3,#part3{ background-color: green;}
+	#map4,#part4{ background-color: blue;}
+	#map5,#part5{ background-color: red;}
+</style>
+</head>
+<body>
+<div id="container">
+	<div id="globalmap">
+		<div class="map" id="map1">Value : <label>false</label></div>
+		<div class="map" id="map2">Value : <label>false</label></div>
+		<div class="map" id="map3">Value : <label>false</label></div>
+		<div class="map" id="map4">Value : <label>false</label></div>
+		<div class="map" id="map5">Value : <label>false</label></div>
+	</div>
+
+	<div class="part" id="part1">Value : <label>false</label></div>
+	<div class="part" id="part2">Value : <label>false</label></div>
+	<div class="part" id="part3">Value : <label>false</label></div>
+	<div class="part" id="part4">Value : <label>false</label></div>
+	<div class="part" id="part5">Value : <label>false</label></div>
+</div>
+</body>
+<script type="text/javascript">
+
+	$(function(){
+
+		$('#part1').isOnScreen({
+			visibleTrigger: 10,
+			onDone: function(done,scene){
+				$('#part1').find('label').text(done)
+				$('#map1').find('label').text(done)
+			}
+		})
+		$('#part2').isOnScreen({
+			visibleTrigger: 30,
+			onDone: function(done,scene){
+				console.log('done2',done)
+				$('#part2').find('label').text(done)
+				$('#map2').find('label').text(done)
+			}
+		})
+		$('#part3').isOnScreen({
+			visibleTrigger: 50,
+			onDone: function(done,scene){
+				$('#part3').find('label').text(done)
+				$('#map3').find('label').text(done)
+			}
+		})
+		$('#part4').isOnScreen({
+			visibleTrigger: 70,
+			onDone: function(done,scene){
+				$('#part4').find('label').text(done)
+				$('#map4').find('label').text(done)
+			}
+		})
+		$('#part5').isOnScreen({
+			visibleTrigger: 90,
+			onDone: function(done,scene){
+				$('#part5').find('label').text(done)
+				$('#map5').find('label').text(done)
+			}
+		})
+
+	})
+
+</script>
+</html>
