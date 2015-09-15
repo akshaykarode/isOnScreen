@@ -4,8 +4,8 @@
 		isOptionProvided : false
 	}
 	var defaults = {
-		visibleTill: 0,
-		onDoneCallback : function(){return true}
+		visibleTrigger: 0,
+		onDone : function(){return true}
 	}
 	$.fn.isOnScreen = function(options) {
 		var $elem = $(this)
@@ -16,7 +16,7 @@
 		$w.scroll(debounce(function() {
 			var scene = getScene($elem),
 					done  = processResult(scene,$elem)
-			$elem.options.onDoneCallback(done,scene)
+			$elem.options.onDone(done,scene)
 		}, 500))
 	}
 	function getScene(element) {
@@ -38,11 +38,11 @@
 		if(!_meta.isOptionProvided){ // if no options then return default 
 			return ((scene.elemBottom <= scene.docViewBottom) && (scene.elemTop >= scene.docViewTop)); 
 		}
-		if(element.options.visibleTill!=0){ // if visibleTill then return truth
+		if(element.options.visibleTrigger!=0){ // if visibleTrigger then return truth
 			var canvasY = scene.elemTop - scene.docViewTop,
 					paintY = scene.docViewBottom - scene.elemTop,
 					percent = (paintY*100)/(canvasY+paintY);
-			if(percent>=element.options.visibleTill && (scene.elemBottom > scene.docViewTop)){
+			if(percent>=element.options.visibleTrigger && (scene.elemBottom > scene.docViewTop)){
 				return true; // return if element is visible
 			}else{  // return false if element gone away - (scene.elemBottom <= scene.docViewTop) || (scene.elemTop >= scene.docViewBottom)
 				return false

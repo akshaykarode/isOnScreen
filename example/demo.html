@@ -38,37 +38,37 @@
 	$(function(){
 
 		$('#part1').isOnScreen({
-			visibleTill: 10,
-			onDoneCallback: function(done,scene){
+			visibleTrigger: 10,
+			onDone: function(done,scene){
 				$('#part1').find('label').text(done)
 				$('#map1').find('label').text(done)
 			}
 		})
 		$('#part2').isOnScreen({
-			visibleTill: 30,
-			onDoneCallback: function(done,scene){
+			visibleTrigger: 30,
+			onDone: function(done,scene){
 				console.log('done2',done)
 				$('#part2').find('label').text(done)
 				$('#map2').find('label').text(done)
 			}
 		})
 		$('#part3').isOnScreen({
-			visibleTill: 50,
-			onDoneCallback: function(done,scene){
+			visibleTrigger: 50,
+			onDone: function(done,scene){
 				$('#part3').find('label').text(done)
 				$('#map3').find('label').text(done)
 			}
 		})
 		$('#part4').isOnScreen({
-			visibleTill: 70,
-			onDoneCallback: function(done,scene){
+			visibleTrigger: 70,
+			onDone: function(done,scene){
 				$('#part4').find('label').text(done)
 				$('#map4').find('label').text(done)
 			}
 		})
 		$('#part5').isOnScreen({
-			visibleTill: 90,
-			onDoneCallback: function(done,scene){
+			visibleTrigger: 90,
+			onDone: function(done,scene){
 				$('#part5').find('label').text(done)
 				$('#map5').find('label').text(done)
 			}
