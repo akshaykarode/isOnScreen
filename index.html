@@ -30,23 +30,52 @@
 <h3>
 <a id="default" class="anchor" href="#default" aria-hidden="true"><span class="octicon octicon-link"></span></a>Default</h3>
 
-<pre><code>$(selector).isOnScreen()
+<pre><code>$(selector).isOnScreen({
+ onDone: function(done,scene){
+   // do stuff
+ }
+})
 </code></pre>
 
 <h3>
 <a id="visibility-trigger" class="anchor" href="#visibility-trigger" aria-hidden="true"><span class="octicon octicon-link"></span></a>Visibility Trigger</h3>
 
-<pre><code>$(selector).isOnScreen({visibleTrigger: 25})
+<pre><code>$(selector).isOnScreen({
+  visibleTrigger: 25,
+  onDone: function(done,scene){
+   // do stuff
+  }
+})
 </code></pre>
 
 <h3>
 <a id="callbacks--ondone" class="anchor" href="#callbacks--ondone" aria-hidden="true"><span class="octicon octicon-link"></span></a>Callbacks : onDone</h3>
 
 <pre><code>// When user done scroll event , onDone fires.
-$(selector).isOnScreen({visibleTrigger: 25 ,onDone: function(done,scene){} })
+$(selector).isOnScreen({
+  visibleTrigger: 25,
+  onDone: function(done,scene){
+   // do stuff - while element arrives at screen
+  } 
+})
 </code></pre>
 
 <p>returns <strong>done</strong>: true|false , <strong>scene</strong> : object {docViewTop:'',docViewBottom:'',elemTop:'',elemBottom:''}</p>
+
+<h3>
+<a id="callbacks--onbackstage" class="anchor" href="#callbacks--onbackstage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Callbacks : onBackStage</h3>
+
+<pre><code>// When element not on screen , onBackStage fires.
+$(selector).isOnScreen({
+  visibleTrigger: 25,
+  onDone: function(done,scene){
+   // do stuff
+  },
+  onBackStage: function(done,scene){
+   // do stuff - while element at backstage
+  } 
+})
+</code></pre>
 
 <h1>
 <a id="demo" class="anchor" href="#demo" aria-hidden="true"><span class="octicon octicon-link"></span></a>Demo</h1>
