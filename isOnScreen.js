@@ -5,20 +5,28 @@
 	}
 	var defaults = {
 		visibleTrigger: 0,
-		onDone : function(){return true}
+		scrollTimeout: 500,
+		onDone : function(){return true},
+		onBackStage : function(){return true}
 	}
 	$.fn.isOnScreen = function(options) {
 		var $elem = $(this)
-		$elem.options = options
-		$elem._meta = _meta
+		$elem.options = $elem._meta = {}
+		overrideDefaults($elem,options)
+
+		$w.scroll(debounce(init, $elem.options.scrollTimeout));
+		init();
 		
-		overrideDefaults($elem)
-		$w.scroll(debounce(function() {
+		function init(){
 			var scene = getScene($elem),
 					done  = processResult(scene,$elem)
 			$elem.options.onDone(done,scene)
-		}, 500))
+			if(!done && $elem.options.onBackStage){ // fires when element is backstage
+				$elem.options.onBackStage(done,scene)
+			}
+		}
 	}
+	
 	function getScene(element) {
 		return {
 			docViewTop:   $w.scrollTop(),
@@ -27,15 +35,16 @@
 			elemBottom:   element.offset().top + element.height()
 		}
 	}
-	function overrideDefaults(element){
+	function overrideDefaults(element,options){
+		element._meta = _meta;
 		element._meta.isOptionProvided  = (element.options) ? true:false;
-		// if(element.options)
-		// 	for (key in element.options){
-		// 		defaults[key] = element.options[key]
-		// 	}
+		if(element._meta.isOptionProvided)
+			for (key in defaults){
+				element.options[key] = options[key] || defaults[key]
+			}
 	}
 	function processResult(scene,element){
-		if(!_meta.isOptionProvided){ // if no options then return default 
+		if(!element._meta.isOptionProvided || element.options.visibleTrigger==0){ // if no options then return default 
 			return ((scene.elemBottom <= scene.docViewBottom) && (scene.elemTop >= scene.docViewTop)); 
 		}
 		if(element.options.visibleTrigger!=0){ // if visibleTrigger then return truth
